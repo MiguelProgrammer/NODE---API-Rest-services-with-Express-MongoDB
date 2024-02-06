@@ -1,6 +1,7 @@
 import express from "express";
 import db from "./config/dbConnect.js";
 import livros from "./model/Livro.js";
+import routes from "./routes/index.js"
  
 db.on("error", console.log.bind(console, "Erro de Conexão"));
 db.once("open", () => {
@@ -9,6 +10,7 @@ db.once("open", () => {
 
 const app = express();
 app.use(express.json());
+routes(app);
 
 const mensagem = "Curso de Node";
 const smsPost = "Inserido com Sucesso.";
@@ -21,16 +23,6 @@ const smsDelete = "Removido com Sucesso.";
 
 app.get("/livros/:id", (req, res) => { 
     res.json(livros[buscaLivro(req.params.id)]);
-});
-
-app.get("/", (req, res) => {
-    res.status(200).send(mensagem);
-});
-
-app.get("/livros", (req, res) => {
-    livros.find((err, livros) => {
-        res.status(200).json(livros);
-    });
 });
 
 app.post("/livros", (req, res) => { 
