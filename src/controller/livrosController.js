@@ -7,6 +7,17 @@ class LivroController {
             res.status(200).json(livros);
         }); 
     }
+
+    static getLivroById = (req, res) => {
+        const id = req.params.id;
+        livros.findById(id, (err, livros) => {
+            if(!err){
+                res.status(200).send(livros);
+            } else {
+                res.status(400).send({message: `${err.message} - Falha ao localizar`});
+            }
+        });
+    }
     
     static insertLivros = (req, res) => {
         let livro = new livros(req.body);
@@ -16,6 +27,17 @@ class LivroController {
             }
                 res.status(201).json(livro.toJSON());
         }); 
+    }
+    
+    static updateLivros = (req, res) => {
+        const id = req.params.id;
+        livros.findByIdAndUpdate(id, {$set: req.body}, (err) => {
+            if(!err){
+                res.status(200).send("Atualizado com sucesso")
+            } else {
+                res.status(500).send({message: `${err.message} - Falha ao atualizar`});
+            }
+        });
     }
 }
 

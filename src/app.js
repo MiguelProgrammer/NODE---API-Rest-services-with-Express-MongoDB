@@ -43,13 +43,6 @@ app.patch("/livros/:id", (req, res) => {
 });
 
 
-app.delete("/livros/:id", (req, res) => {
-    let index = buscaLivro(req.params.id);
-    livros.splice(index,1); 
-    res.send(smsDelete);
-});
-
-
 function buscaLivro(id){
     return livros.findIndex(livro => livro.id == id);
 }
