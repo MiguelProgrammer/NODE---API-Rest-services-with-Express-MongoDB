@@ -39,6 +39,17 @@ class LivroController {
             }
         });
     }
+    
+    static deletarLivro = (req, res) => {
+        const id = req.params.id;
+        livros.findByIdAndDelete(id, (err) => {
+            if(!err){
+                res.status(200).send("Removido com sucesso")
+            } else {
+                res.status(500).send({message: `${err.message} - Falha ao remover`});
+            }
+        });
+    }
 }
 
 export default LivroController
